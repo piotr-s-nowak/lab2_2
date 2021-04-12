@@ -4,6 +4,9 @@ import edu.iis.mto.searcher.SequenceSearcher;
 
 public class SimilarityFinder {
 
+    private int intersectSize;
+    private int unionSize;
+
     private SequenceSearcher searcher;
 
     public SimilarityFinder(SequenceSearcher searcher) {
@@ -15,8 +18,8 @@ public class SimilarityFinder {
             return 1.0d;
         }
 
-        int intersectSize = calculateIntersect(seq1, seq2);
-        int unionSize = seq1.length + seq2.length - intersectSize;
+        intersectSize = calculateIntersect(seq1, seq2);
+        unionSize = seq1.length + seq2.length - intersectSize;
 
         return (double) intersectSize / (double) unionSize;
     }
@@ -30,5 +33,12 @@ public class SimilarityFinder {
             }
         }
         return intersectSize;
+    }
+    public int getIntersectSize() {
+        return this.intersectSize;
+    }
+
+    public int getUnionSize() {
+        return this.unionSize;
     }
 }
