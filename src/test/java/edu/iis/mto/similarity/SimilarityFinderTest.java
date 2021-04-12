@@ -69,4 +69,28 @@ class SimilarityFinderTest {
 
     }
 
+    @Test
+    void testUnionValue() {
+        class SequenceSearcherMock  implements SequenceSearcher {
+            SearchResult searchResult;
+            @Override
+            public SearchResult search(int elem, int[] sequence) {
+
+                if (elem % 2 == 0){
+                    return searchResult = new SearchResult(SearchResult.builder().withFound(false));
+                } else if (elem > 0 && elem < 20) {
+                    return searchResult = new SearchResult(SearchResult.builder().withFound(true));
+                }
+                return null;
+            }
+        }
+        int[] seq1 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        int[] seq2 = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+        SequenceSearcherMock searcher = new SequenceSearcherMock();
+        SimilarityFinder indexJaccard = new SimilarityFinder(searcher);
+        indexJaccard.calculateJackardSimilarity(seq1, seq2);
+        assertEquals(15, indexJaccard.getUnionSize());
+
+    }
+    
 }
