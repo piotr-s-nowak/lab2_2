@@ -92,5 +92,25 @@ class SimilarityFinderTest {
         assertEquals(15, indexJaccard.getUnionSize());
 
     }
-    
+
+
+
+    @Test
+    void testSeparateSeq() {
+        class SequenceSearcherMock  implements SequenceSearcher {
+            SearchResult searchResult;
+            @Override
+            public SearchResult search(int elem, int[] sequence) {
+                return searchResult = new SearchResult(SearchResult.builder().withFound(false));
+            }
+        }
+        int[] seq1 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        int[] seq2 = {10, 11, 12, 13, 14, 15, 16, 17, 18, 19};
+        SequenceSearcherMock searcher = new SequenceSearcherMock();
+        SimilarityFinder indexJaccard = new SimilarityFinder(searcher);
+        assertEquals(0, indexJaccard.calculateJackardSimilarity(seq1, seq2));
+
+
+    }
+
 }
